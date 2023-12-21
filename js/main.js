@@ -83,7 +83,7 @@ for (let i = 0; i < posts.length; i++) {
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a class="like-button  js-like-button" href="#" data-postid="${[i]}" id="clicked-${[i]}">
+                        <a class="like-button  js-like-button" data-postid="${[i]}" id="clicked-${[i]}">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                             <span class="like-button__label">Mi Piace</span>
                         </a>
@@ -94,20 +94,25 @@ for (let i = 0; i < posts.length; i++) {
                 </div> 
             </div>            
         </div>
-    `
-    let likedButton = true;
-    let buttonLike = document.getElementById(`clicked-${[i]}`);
-    
+    `    
+}
+
+
+let likeButtons = document.querySelectorAll(`.like-button`);
+for(let i = 0; i < likeButtons.length; i++){
+    //console.log(buttonLike);
+    const buttonLike = likeButtons[i];
     buttonLike.addEventListener('click', function(){
-    
-        if(likedButton){
-            buttonLike.classList.remove('like-button--liked');
-            likedButton = false;
+        const counterLike = document.getElementById(`like-counter-${[i]}`);
+        
+        if(buttonLike.classList.contains('like-button--liked')){
+            posts[i].likes--;
         }
         else{
-            buttonLike.classList.add('like-button--liked');
-            likedButton = true;
+            posts[i].likes++;
         }
-    
+        counterLike.innerHTML = posts[i].likes;
+        
+        buttonLike.classList.toggle('like-button--liked');
     });
 }
